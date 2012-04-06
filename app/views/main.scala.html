@@ -1,0 +1,96 @@
+@(title : String)(startDate : String)(endDate : String)(content : Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
+        <link rel="Stylesheet" media="screen" href="@routes.Assets.at("stylesheets/ui.daterangepicker.css")"/>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/jquery-ui-1.8.16.custom.css")"/>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("img/glyphicons-halfings.png")">
+        <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")"></script>
+        <script src="@routes.Assets.at("javascripts/exporting.js")"></script>
+        <script src="@routes.Assets.at("javascripts/highcharts.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.at("javascripts/date.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.at("javascripts/daterangepicker.jQuery.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-ui-1.8.16.custom.min.js")"></script>
+    </head>
+    
+    <body>
+    
+    <script type="text/javascript">
+    function jiraData(){
+    	var re = /([A-Z]|[a-z])+/;
+       	var datepicker = document.getElementById("rangeA").value;
+       	if(re.test(datepicker)){
+       		$('#dateError').show();
+       		return;
+       	}
+       	var date = datepicker.split(" - ");
+       	var startsplit = date[0].split("/");
+       	var startDate = startsplit[2] + "-" + startsplit[0] + "-" +startsplit[1];
+       	if (date[1] == null || date[1] == undefined || (!date[1]) ){
+  	   		var tmp = date[0].split("/");
+  	   		var endDate = tmp[0] + " " + tmp[1] + " " + tmp[2];
+  	   		var actualDate = new Date(endDate);
+  	   		var newDate = new Date(actualDate.getFullYear(), actualDate.getMonth(), actualDate.getDate()+1);
+  	   		var newEndDateString = ('0'+newDate.getDate()).substr(-2) + ' ' + newDate.toDateString().substr(4,3) + ' ' + newDate.getFullYear();
+  	   		var month = newDate.getMonth()+1;
+  	   		var endDate = newDate.getFullYear() + "-" + month + "-" + newDate.getDate();
+ 		}else{
+        	var endsplit = date[1].split("/");
+        	var endDate = endsplit[2] + "-" + endsplit[0] + "-" + endsplit[1];
+        }
+        if(datepicker == "" || datepicker == null || datepicker == undefined){
+        	startDate = "2012-01-01";
+        	endDate = "2999-12-31";
+        }
+        window.location = "/jiraData/" + startDate + "/" + endDate;
+	}
+	</script>
+    
+    <!-- Navbar ================================================== -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Jira Data Interface</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="">
+                <a href="#track">Track</a>
+              </li>
+              <li class="">
+                <a href="#enviroment">Enviroment</a>
+              </li>
+              <li class="">
+                <a href="#layer">Layer</a>
+              </li>
+              <li class="">
+                <a href="#getJSON">JSON</a>
+              </li>
+              <form class="navbar-search pull-left" >
+  				<input type="text" class="search-query" placeholder="@startDate - @endDate" id="rangeA">
+			  </form>
+              <li class="">
+              	<input class="btn" onclick="jiraData()" type="button" value="Get Data" />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  	 <div class="alert alert-error" style="padding-top:50px;display:none" id="dateError">
+        <p align="center"><strong>Oh snap!</strong> Not a valid date, please select again from datepicker!!!</p>
+    </div>
+	<div class="container">
+		@content
+	</div>
+    </body>
+</html>

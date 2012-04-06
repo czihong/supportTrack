@@ -1,0 +1,17 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /								controllers.Application.index()
+
+GET     /jiraData/:startDate/:endDate	controllers.Application.jiraData(startDate:String, endDate:String)
+GET     /getJson/:startDate/:endDate	controllers.Application.getJson(startDate:String, endDate:String)
+
+# example -> http://localhost:9000/sum/1/2
+# GET     /sum/:a/:b            controllers.Application.sum(a:Int, b:Int)
+# example -> http://localhost:9000/sum?a=1;b=2
+# GET    /sum                 controllers.Application.sum(a:Int, b:Int)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               	controllers.Assets.at(path="/public", file)

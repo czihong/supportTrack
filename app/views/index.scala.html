@@ -1,0 +1,337 @@
+@(walmartCom:String, pangaea: String, dev:String, qa:String, pqa:String, prod:String, application:String, platform:String, infrastructure:String, startDate:String, endDate:String )
+
+@main("Welcome to Jira Data Center")(startDate)(endDate) {
+<section style="padding-top:50px" id="track">
+<div class="row-fluid" id="track">
+	<div class="span5" style="margin: 20px 0px 0px">
+	<table class="table">
+		  <tr>
+		  	<th></th>
+		  	<th>Time (h)</th>
+		  	<th>Percentage (%)</th>
+		  </tr>
+	      <tr>
+            <th>Walmart.Com</th>
+            <td>@walmartCom</td>
+            <td>@controllers.Application.percenTwoArgu(walmartCom,pangaea)</td>
+          </tr>
+          <tr>
+            <th>Dev</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10004")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10004")</td>
+          </tr>
+          <tr>
+            <th>QA</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10005")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10005")</td>
+          </tr>
+          <tr>
+            <th>PQA</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10006")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10006")</td>
+          </tr>
+          <tr>
+            <th>PROD</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10007")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10007")</td>
+          </tr>
+          <tr>
+            <th>Pangaea</th>
+            <td>@pangaea</td>
+            <td>@controllers.Application.percenTwoArgu(pangaea,walmartCom)</td>
+          </tr>
+          <tr>
+            <th>Dev</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10004")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10004")</td>
+          </tr>
+          <tr>
+            <th>QA</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10005")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10005")</td>
+          </tr>
+          <tr>
+            <th>PQA</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10006")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10006")</td>
+          </tr>
+          <tr>
+            <th>PROD</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10007")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10007")</td>
+          </tr>
+      </table>
+	</div>
+	<div id="trackChartDiv" class="span7" style="min-width: 300px; height: 300px; margin: 0 auto"></div>
+</div>
+
+</section>
+<section id="enviroment" style="padding-top:50px">
+<div class="row-fluid"  >
+	<div class="span5" style="margin: 20px 0px 0px">
+	<table class="table">
+		  <tr>
+		  	<th></th>
+		  	<th>Time (h)</th>
+		  	<th>Percentage (%)</th>
+		  </tr>
+          <tr>
+            <th>DEV</th>
+            <td>@dev</td>
+            <td>@controllers.Application.percenFourArgu(dev,qa,pqa,prod)</td>
+          </tr>
+          <tr>
+            <th>QA</th>
+            <td>@qa</td>
+            <td>@controllers.Application.percenFourArgu(qa,dev,pqa,prod)</td>
+          </tr>
+          <tr>
+            <th>PQA</th>
+            <td>@pqa</td>
+            <td>@controllers.Application.percenFourArgu(pqa,dev,qa,prod)</td>
+          </tr> 
+		  <tr>
+            <th>PROD</th>
+            <td>@prod</td>
+            <td>@controllers.Application.percenFourArgu(prod,dev,qa,pqa)</td>
+          </tr>
+      </table>
+	</div>
+	<div id="envChartDiv" class="span7" style="min-width: 300px; height: 300px; margin: 0 auto"></div>
+</div>
+</section>
+<section style="padding-top:50px" id="layer">
+<div class="row-fluid">
+	<div class="span5" style="margin: 20px 0px 0px">
+	<table class="table">
+		  <tr>
+		  	<th></th>
+		  	<th>Time (h)</th>
+		  	<th>Percentage (%)</th>
+		  </tr>
+          <tr>
+            <th>Application</th>
+            <td>@application</td>
+            <td>@controllers.Application.percenThreeArgu(application,platform,infrastructure)</td>
+          </tr>
+          <tr>
+            <th>Platform</th>
+            <td>@platform</td>
+            <td>@controllers.Application.percenThreeArgu(platform,application,infrastructure)</td>
+          </tr>
+          <tr>
+            <th>Infrastructure</th>
+            <td>@infrastructure</td>
+            <td>@controllers.Application.percenThreeArgu(infrastructure,application,platform)</td>
+          </tr>
+      </table>
+	</div>
+	<div id="layerChartDiv" class="span7" style="min-width: 300px; height: 300px; margin: 0 auto"></div>
+</div>
+</section>
+@views.html.jiradata(walmartCom,pangaea,dev,qa,pqa,prod,application,platform,infrastructure,startDate,endDate)
+}
+
+<script type="text/javascript">
+$(function () {
+    var trackChart;
+	var envChart;
+	var layerChart;
+    $(document).ready(function() { 
+        var colors = Highcharts.getOptions().colors,
+            categories = ['WalmartCom', 'Pangaea'],
+            name = 'Browser brands',
+            data = [{
+                    y: @controllers.Application.percenTwoArgu(walmartCom,pangaea),
+                    color: colors[0],
+                    drilldown: {
+                        name: 'WalmartCom Env',
+                        categories: ['DEV', 'QA', 'PQA', 'PROD'],
+                        data: [
+                        	@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10004"), 
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10005"), 
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10006"), 
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10007")
+						],
+                        color: colors[0]
+                    }
+                }, {
+                    y: @controllers.Application.percenTwoArgu(pangaea, walmartCom),
+                    color: colors[1],
+                    drilldown: {
+                        name: 'Pangaea Env',
+                        categories: ['DEV', 'QA', 'PQA', 'PROD'],
+                        data: [
+                        	@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10004"), 
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10005"), 
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10006"), 
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10007")
+						],
+                        color: colors[1]
+                    }
+                }];
+    
+    
+        // Build the data arrays
+        var browserData = [];
+        var versionsData = [];
+        for (var i = 0; i < data.length; i++) {
+    
+            // add browser data
+            browserData.push({
+                name: categories[i],
+                y: data[i].y,
+                color: data[i].color
+            });
+    
+            // add version data
+            for (var j = 0; j < data[i].drilldown.data.length; j++) {
+                var brightness = 0.2 - (j / data[i].drilldown.data.length) / 5 ;
+                versionsData.push({
+                    name: data[i].drilldown.categories[j],
+                    y: data[i].drilldown.data[j],
+                    color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                });
+            }
+        }
+        
+                
+        // Create the chart
+        trackChart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'trackChartDiv',
+                type: 'pie'
+            },
+            title: {
+                text: 'Track',
+                align: 'left'
+            },
+            yAxis: {
+                title: {
+                    text: 'Total percent market share'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    shadow: false
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+                }
+            },
+            series: [{
+                name: 'Browsers',
+                data: browserData,
+                size: '60%',
+                dataLabels: {
+                    formatter: function() {
+                        return this.y > 5 ? this.point.name : null;
+                    },
+                    color: 'white',
+                    distance: -30
+                }
+            }, {
+                name: 'Versions',
+                data: versionsData,
+                innerSize: '60%',
+                dataLabels: {
+                    formatter: function() {
+                        // display only if larger than 1
+                        return this.y > 1 ? '<b>'+ this.point.name +':</b> '+ this.y +'%'  : null;
+                    }
+                }
+            }]
+        });
+        
+        envChart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'envChartDiv',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Enviroment',
+                align: 'left'
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(1) +' %';
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: false,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(1) +' %';
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Enviroment',
+                data: [
+                    ['Prod',   @prod],
+                    ['QA',     @qa],
+                    ['Dev', @dev],
+                    ['PQA',    @pqa]
+                ]
+            }]
+        });
+        
+		layerChart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'layerChartDiv',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Layer',
+                align: 'left'
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(1) +' %';
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: false,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(1) +' %';
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['Application', @application],
+                    ['Platform',      @platform],
+                    ['Infrastructure',@infrastructure]
+                ]
+            }]
+        });
+
+    
+    });
+});
+    // Datepicker
+    $('#datepicker').datepicker({
+        inline: true
+    });
+    // Filament datepicker
+    $('#rangeA').daterangepicker();
+    $('#rangeBa, #rangeBb').daterangepicker();
+</script>
