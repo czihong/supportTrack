@@ -4,63 +4,79 @@
 <section style="padding-top:50px" id="track">
 <div class="row-fluid" id="track">
 	<div class="span5" style="margin: 20px 0px 0px">
-	<table class="table">
+	<table class="table main-table">
 		  <tr>
 		  	<th></th>
 		  	<th>Time (h)</th>
 		  	<th>Percentage (%)</th>
 		  </tr>
-	      <tr>
+	      <tr data-toggle="collapse" data-target="#walmartTable" id="test">
             <th>Walmart.Com</th>
             <td>@walmartCom</td>
-            <td>@controllers.Application.percenTwoArgu(walmartCom,pangaea)</td>
+            <td>
+            	<div style="float:left">@controllers.Application.percenTwoArgu(walmartCom,pangaea)</div>
+            	<div style="float:right"><i class="icon-arrow-down" id="change"></i><div>
+            </td>
           </tr>
-          <tr>
-            <th>Dev</th>
-            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10004")</td>
+    </table>
+    <div id="walmartTable" class="collapse">
+    	<table class="table main-table">
+    	  <tr>
+            <th style="width:36%;text-align: center">Dev</th>
+            <td style="width:76px">@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10004")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10004")</td>
           </tr>
           <tr>
-            <th>QA</th>
+            <th style="text-align: center">QA</th>
             <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10005")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10005")</td>
           </tr>
           <tr>
-            <th>PQA</th>
+            <th style="text-align: center">PQA</th>
             <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10006")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10006")</td>
           </tr>
           <tr>
-            <th>PROD</th>
+            <th style="text-align: center">PROD</th>
             <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10007")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10007")</td>
           </tr>
-          <tr>
-            <th>Pangaea</th>
-            <td>@pangaea</td>
-            <td>@controllers.Application.percenTwoArgu(pangaea,walmartCom)</td>
+    	</table>
+    </div>
+    <table class="table main-table">
+          <tr data-toggle="collapse" data-target="#pangaeaTable">
+            <th style="width:36%">Pangaea</th>
+            <td style="width:76px">@pangaea</td>
+            <td>
+            <div style="float:left">@controllers.Application.percenTwoArgu(pangaea,walmartCom)</div>
+            <div style="float:right"><i class="icon-arrow-down"></i><div>
+            </td>
           </tr>
+   </table>
+   <div id="pangaeaTable" class="collapse">
+   		<table class="table main-table">
           <tr>
-            <th>Dev</th>
-            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10004")</td>
+            <th style="width:36%;text-align: center">Dev</th>
+            <td style="width:76px">@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10004")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10004")</td>
           </tr>
           <tr>
-            <th>QA</th>
+            <th style="text-align: center">QA</th>
             <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10005")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10005")</td>
           </tr>
           <tr>
-            <th>PQA</th>
+            <th style="text-align: center">PQA</th>
             <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10006")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10006")</td>
           </tr>
           <tr>
-            <th>PROD</th>
+            <th style="text-align: center">PROD</th>
             <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10007")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10007")</td>
           </tr>
-      </table>
+   		</table>
+   </div>
 	</div>
 	<div id="trackChartDiv" class="span7" style="min-width: 300px; height: 300px; margin: 0 auto"></div>
 </div>
