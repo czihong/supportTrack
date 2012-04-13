@@ -1,4 +1,4 @@
-@(walmartCom:String, pangaea: String, dev:String, qa:String, pqa:String, prod:String, application:String, platform:String, infrastructure:String, startDate:String, endDate:String )
+@(walmartCom:String, pangaea: String, dev:String, qa:String, pqa:String, prod:String, release:String, application:String, platform:String, infrastructure:String, startDate:String, endDate:String )
 
 <section style="padding-top:50px" id="getJSON">
 <div class="well" >
@@ -17,7 +17,8 @@
     			prod:"@prod",
     			qa:"@qa",
     			dev:"@dev",
-    			pqa:"@pqa"
+    			pqa:"@pqa",
+    			release:"@release"
     		},
     		layer:{
     			application:"@application",

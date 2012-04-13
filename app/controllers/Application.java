@@ -21,11 +21,13 @@ public class Application extends Controller {
 		String qaDur = ds.getDuration(defaultStartDate, defaultEndDate, SqlInfo.QA);
 		String pqaDur = ds.getDuration(defaultStartDate, defaultEndDate, SqlInfo.PQA);
 		String prodDur = ds.getDuration(defaultStartDate, defaultEndDate, SqlInfo.PROD);
+		String releaseDur = ds.getDuration(defaultStartDate, defaultEndDate, SqlInfo.RELEASE);
 		String applicationDur = ds.getDuration(defaultStartDate, defaultEndDate, SqlInfo.APPLICATION);
 		String platformDur = ds.getDuration(defaultStartDate, defaultEndDate, SqlInfo.PLATFORM);
 		String infrastructureDur = ds.getDuration(defaultStartDate, defaultEndDate,
 				SqlInfo.INFRASTRUCTURE);
-		return ok(index.render(walmartDur, pangaeaDur, devDur, qaDur, pqaDur, prodDur, applicationDur,
+		System.out.println(infrastructureDur);
+		return ok(index.render(walmartDur, pangaeaDur, devDur, qaDur, pqaDur, prodDur, releaseDur, applicationDur,
 				platformDur, infrastructureDur, defaultStartDate, defaultEndDate));
 	}
 
@@ -43,10 +45,11 @@ public class Application extends Controller {
 		String qaDur = ds.getDuration(startDate, endDate, SqlInfo.QA);
 		String pqaDur = ds.getDuration(startDate, endDate, SqlInfo.PQA);
 		String prodDur = ds.getDuration(startDate, endDate, SqlInfo.PROD);
+		String releaseDur = ds.getDuration(startDate, endDate, SqlInfo.RELEASE);
 		String applicationDur = ds.getDuration(startDate, endDate, SqlInfo.APPLICATION);
 		String platformDur = ds.getDuration(startDate, endDate, SqlInfo.PLATFORM);
 		String infrastructureDur = ds.getDuration(startDate, endDate, SqlInfo.INFRASTRUCTURE);
-		return ok(index.render(walmartDur, pangaeaDur, devDur, qaDur, pqaDur, prodDur, applicationDur,
+		return ok(index.render(walmartDur, pangaeaDur, devDur, qaDur, pqaDur, prodDur, releaseDur, applicationDur,
 				platformDur, infrastructureDur, startDate, endDate));
 	}
 
@@ -64,12 +67,13 @@ public class Application extends Controller {
 		String qaDur = ds.getDuration(startDate, endDate, SqlInfo.QA);
 		String pqaDur = ds.getDuration(startDate, endDate, SqlInfo.PQA);
 		String prodDur = ds.getDuration(startDate, endDate, SqlInfo.PROD);
+		String releaseDur = ds.getDuration(startDate, endDate, SqlInfo.RELEASE);
 		String applicationDur = ds.getDuration(startDate, endDate, SqlInfo.APPLICATION);
 		String platformDur = ds.getDuration(startDate, endDate, SqlInfo.PLATFORM);
 		String infrastructureDur = ds.getDuration(startDate, endDate, SqlInfo.INFRASTRUCTURE);
 		String jsonString = "{walmartCom:" + walmartDur + "," + "pangaea:\"" + pangaeaDur + "\","
 				+ "dev:\"" + devDur + "\"," + "qa:\"" + qaDur + "\"," + "pqa:\"" + pqaDur + "\","
-				+ "prod:\"" + prodDur + "," + "application:\"" + applicationDur + "\"," + "platform:\""
+				+ "prod:\"" + prodDur + "," + "release:\"" + releaseDur + "\"," + "application:\"" + applicationDur + "\"," + "platform:\""
 				+ platformDur + "\"," + "infrastructure:\"" + infrastructureDur + "\"," + "startDate:\""
 				+ startDate + "\"," + "endDate:\"" + endDate + "\"}";
 		Result jsonResult = ok(jsonString);
@@ -141,6 +145,22 @@ public class Application extends Controller {
 			return Double.toString(Double.valueOf(twoDForm.format(result)));
 		}
 	}
+	
+	public static String percenFiveArgu(String a, String b, String c, String d, String e) {
+		Double dblA = Double.parseDouble(a);
+		Double dblB = Double.parseDouble(b);
+		Double dblC = Double.parseDouble(c);
+		Double dblD = Double.parseDouble(d);
+		Double dblE = Double.parseDouble(e);
+		Double sumABCDE = dblA + dblB + dblC + dblD + dblE;
+		if (sumABCDE == 0.0) {
+			return "0";
+		} else {
+			Double result = dblA / sumABCDE * 100;
+			DecimalFormat twoDForm = new DecimalFormat("#.#");
+			return Double.toString(Double.valueOf(twoDForm.format(result)));
+		}
+	}
 
 	/**
 	 * Get env duration under specified track from startDate to endDate
@@ -168,7 +188,6 @@ public class Application extends Controller {
 		Double walmartDur = Double.parseDouble(ds.getDuration(startDate, endDate, SqlInfo.WALMAERCOM));
 		Double pangaeaDur = Double.parseDouble(ds.getDuration(startDate, endDate, SqlInfo.PANGAEA));
 		Double sum = walmartDur + pangaeaDur;
-		System.out.println("envdur " + trackEnvDur + " walmart " + walmartDur + " pangaeaDur " + pangaeaDur);
 		if(sum == 0.0){
 			return "0";
 		} else {

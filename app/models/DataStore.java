@@ -12,7 +12,7 @@ public class DataStore {
 	String driver = "com.mysql.jdbc.Driver";
 	String url = "jdbc:mysql://127.0.0.1:3306/jira";
 	String user = "root";
-	String password = "root";
+	String password = "root123";
 
 	/**
 	 * Recommond not use this method
@@ -191,8 +191,8 @@ public class DataStore {
 					+ "FROM jira.customfieldvalue AS B "
 					+ "WHERE A.issue = B.issue AND B.customfield IN (10009)) AS duration "
 					+ "FROM jira.customfieldvalue AS A " + "WHERE A.stringvalue IN ("
-					+ Integer.parseInt(stringValue) + ") " + "AND A.issue IN (SELECT id FROM jira.jiraissue "
-					+ "WHERE created <=\"" + end + "\" AND created >=\"" + start + "\");";
+					+ Integer.parseInt(stringValue) + ") " + "AND A.issue IN (SELECT issue FROM jira.customfieldvalue "
+					+ "WHERE datevalue <=\"" + end + " 23:59:59\" AND datevalue >=\"" + start + "\");";
 			// "where created <=\"" + end + "\");";
 			ResultSet rs = statement.executeQuery(query);
 			int count = 0;
@@ -241,8 +241,8 @@ public class DataStore {
 					+ Integer.parseInt(env) + ")) as env, " + "(select C.numbervalue "
 					+ "from jira.customfieldvalue as C " + "where A.issue = C.issue and C.customfield IN ( "
 					+ 10009 + ")) as duration " + "from jira.customfieldvalue as A " + "where A.stringvalue="
-					+ Integer.parseInt(track) + " and A.issue in (SELECT id FROM jira.jiraissue "
-					+ "where created <=\"" + end + "\" and created >=\"" + start + "\");";
+					+ Integer.parseInt(track) + " and A.issue in (SELECT issue FROM jira.customfieldvalue "
+					+ "where datevalue <=\"" + end + " 23:59:59\" and datevalue >=\"" + start + "\");";
 			// "where created <=\"" + end + "\");";
 			ResultSet rs = statement.executeQuery(query);
 			int count = 0;

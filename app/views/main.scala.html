@@ -32,14 +32,16 @@
        	var date = datepicker.split(" - ");
        	var startsplit = date[0].split("/");
        	var startDate = startsplit[2] + "-" + startsplit[0] + "-" +startsplit[1];
+       	
        	if (date[1] == null || date[1] == undefined || (!date[1]) ){
-  	   		var tmp = date[0].split("/");
-  	   		var endDate = tmp[0] + " " + tmp[1] + " " + tmp[2];
-  	   		var actualDate = new Date(endDate);
-  	   		var newDate = new Date(actualDate.getFullYear(), actualDate.getMonth(), actualDate.getDate()+1);
-  	   		var newEndDateString = ('0'+newDate.getDate()).substr(-2) + ' ' + newDate.toDateString().substr(4,3) + ' ' + newDate.getFullYear();
-  	   		var month = newDate.getMonth()+1;
-  	   		var endDate = newDate.getFullYear() + "-" + month + "-" + newDate.getDate();
+  	   		//var tmp = date[0].split("/");
+  	   		//var endDate = tmp[0] + " " + tmp[1] + " " + tmp[2];
+  	   		//var actualDate = new Date(endDate);
+  	   		//var newDate = new Date(actualDate.getFullYear(), actualDate.getMonth(), actualDate.getDate()+1);
+  	   		//var newEndDateString = ('0'+newDate.getDate()).substr(-2) + ' ' + newDate.toDateString().substr(4,3) + ' ' + newDate.getFullYear();
+  	   		//var month = newDate.getMonth()+1;
+  	   		//var endDate = newDate.getFullYear() + "-" + month + "-" + newDate.getDate();
+  	   		var endDate = startDate;
  		}else{
         	var endsplit = date[1].split("/");
         	var endDate = endsplit[2] + "-" + endsplit[0] + "-" + endsplit[1];

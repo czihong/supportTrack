@@ -10,7 +10,8 @@ public class SqlInfo {
 	public final static String QA = "10005";
 	public final static String PQA = "10006";
 	public final static String PROD = "10007";
+	public final static String RELEASE = "10048";
 	public final static String APPLICATION = "10028";
 	public final static String PLATFORM = "10029";
-	public final static String INFRASTRUCTURE = "10030";
+	public final static String INFRASTRUCTURE = "10051";
 }

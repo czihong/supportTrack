@@ -7,7 +7,6 @@ GET     /								controllers.Application.index()
 
 GET     /jiraData/:startDate/:endDate	controllers.Application.jiraData(startDate:String, endDate:String)
 GET     /getJson/:startDate/:endDate	controllers.Application.getJson(startDate:String, endDate:String)
-
 # example -> http://localhost:9000/sum/1/2
 # GET     /sum/:a/:b            controllers.Application.sum(a:Int, b:Int)
 # example -> http://localhost:9000/sum?a=1;b=2

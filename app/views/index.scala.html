@@ -1,4 +1,4 @@
-@(walmartCom:String, pangaea: String, dev:String, qa:String, pqa:String, prod:String, application:String, platform:String, infrastructure:String, startDate:String, endDate:String )
+@(walmartCom:String, pangaea: String, dev:String, qa:String, pqa:String, prod:String, release:String, application:String, platform:String, infrastructure:String, startDate:String, endDate:String )
 
 @main("Welcome to Jira Data Center")(startDate)(endDate) {
 <section style="padding-top:50px" id="track">
@@ -10,7 +10,7 @@
 		  	<th>Time (h)</th>
 		  	<th>Percentage (%)</th>
 		  </tr>
-	      <tr data-toggle="collapse" data-target="#walmartTable" id="test">
+	      <tr data-toggle="collapse" data-target="#walmartTable" id="walmartIcon">
             <th>Walmart.Com</th>
             <td>@walmartCom</td>
             <td>
@@ -40,6 +40,11 @@
             <th style="text-align: center">PROD</th>
             <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10007")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10007")</td>
+          </tr>
+          <tr>
+            <th style="text-align: center">RELEASE</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10000", "10048")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10048")</td>
           </tr>
     	</table>
     </div>
@@ -75,6 +80,11 @@
             <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10007")</td>
             <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10007")</td>
           </tr>
+          <tr>
+            <th style="text-align: center">RELEASE</th>
+            <td>@controllers.Application.getTrackEnv(startDate,endDate, "10001", "10048")</td>
+            <td>@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10048")</td>
+          </tr>
    		</table>
    </div>
 	</div>
@@ -94,22 +104,27 @@
           <tr>
             <th>DEV</th>
             <td>@dev</td>
-            <td>@controllers.Application.percenFourArgu(dev,qa,pqa,prod)</td>
+            <td>@controllers.Application.percenFiveArgu(dev,qa,pqa,prod,release)</td>
           </tr>
           <tr>
             <th>QA</th>
             <td>@qa</td>
-            <td>@controllers.Application.percenFourArgu(qa,dev,pqa,prod)</td>
+            <td>@controllers.Application.percenFiveArgu(qa,dev,pqa,prod,release)</td>
           </tr>
           <tr>
             <th>PQA</th>
             <td>@pqa</td>
-            <td>@controllers.Application.percenFourArgu(pqa,dev,qa,prod)</td>
+            <td>@controllers.Application.percenFiveArgu(pqa,dev,qa,prod,release)</td>
           </tr> 
 		  <tr>
             <th>PROD</th>
             <td>@prod</td>
-            <td>@controllers.Application.percenFourArgu(prod,dev,qa,pqa)</td>
+            <td>@controllers.Application.percenFiveArgu(prod,dev,qa,pqa,release)</td>
+          </tr>
+          <tr>
+            <th>RELEASE</th>
+            <td>@release</td>
+            <td>@controllers.Application.percenFiveArgu(release,dev,qa,pqa,prod)</td>
           </tr>
       </table>
 	</div>
@@ -145,7 +160,7 @@
 	<div id="layerChartDiv" class="span7" style="min-width: 300px; height: 300px; margin: 0 auto"></div>
 </div>
 </section>
-@views.html.jiradata(walmartCom,pangaea,dev,qa,pqa,prod,application,platform,infrastructure,startDate,endDate)
+@views.html.jiradata(walmartCom,pangaea,dev,qa,pqa,prod,release,application,platform,infrastructure,startDate,endDate)
 }
 
 <script type="text/javascript">
@@ -162,12 +177,13 @@ $(function () {
                     color: colors[0],
                     drilldown: {
                         name: 'WalmartCom Env',
-                        categories: ['DEV', 'QA', 'PQA', 'PROD'],
+                        categories: ['DEV', 'QA', 'PQA', 'PROD','RELEASE'],
                         data: [
                         	@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10004"), 
 							@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10005"), 
 							@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10006"), 
-							@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10007")
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10007"),
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10000", "10048")
 						],
                         color: colors[0]
                     }
@@ -176,12 +192,13 @@ $(function () {
                     color: colors[1],
                     drilldown: {
                         name: 'Pangaea Env',
-                        categories: ['DEV', 'QA', 'PQA', 'PROD'],
+                        categories: ['DEV', 'QA', 'PQA', 'PROD','RELEASE'],
                         data: [
                         	@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10004"), 
 							@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10005"), 
 							@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10006"), 
-							@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10007")
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10007"),
+							@controllers.Application.getTrackSubPer(startDate,endDate, "10001", "10048")
 						],
                         color: colors[1]
                     }
@@ -296,7 +313,8 @@ $(function () {
                     ['Prod',   @prod],
                     ['QA',     @qa],
                     ['Dev', @dev],
-                    ['PQA',    @pqa]
+                    ['PQA',    @pqa],
+                    ['RELEASE',    @release]
                 ]
             }]
         });
